@@ -1,8 +1,3 @@
-provider "aws" {
-  profile    = var.aws_profile
-  region     = "us-east-1"  
-}
-
 locals {
   mysql_ami_version      = "0.0.1"
   apache_php_ami_version = "0.0.1"
@@ -54,7 +49,7 @@ module "s3_config_app" {
   source       = "./modules/s3_bucket"
   bucket_name  = "${var.project_name}-ansible-app-config"
   # Sem ${path.module}, irá pegar a partir do diretório de onde foi chamado
-  upload_dir   = "./ansible"
+  upload_dir   = "${path.cwd}/${var.app_config_dir}"
   zipfile_name = "app_config.zip"
   dest_dir     = "ansible"
   tags         = {

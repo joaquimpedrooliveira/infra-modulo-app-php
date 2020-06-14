@@ -1,7 +1,3 @@
-variable "aws_profile" {
-  type = string
-}
-
 variable "project_name" {
   type = string
 }
@@ -23,6 +19,10 @@ variable "app_instance_type" {
 }
 
 variable "db_instance_type" {
+  type = string
+}
+
+variable "app_config_dir" {
   type = string
 }
 
