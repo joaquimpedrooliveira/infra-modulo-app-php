@@ -1,0 +1,40 @@
+- name: "Envia o arquivo de credenciais do usuário root para o servidor"
+  template:
+    src: templates/.my.cnf.j2
+    dest: /home/ubuntu/.my.cnf
+    mode: '0600'
+    owner: ubuntu
+    group: ubuntu
+    #remote_src: yes
+  become: yes
+- name: "Muda a senha do usuário root do MySQL"
+  mysql_user:
+    name: root
+    password: "{{ mysql_root_pwd }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+  become: yes
+- name: "Cria o BD para a aplicação"
+  mysql_db:
+    name: '{{ wp_db_name }}'
+    login_user: root
+    login_password: "{{ mysql_root_pwd }}"
+    state: present
+- name: "Cria o usuário de BD para a aplicação e o acesso necessário"
+  mysql_user:
+    login_user: root
+    login_password: '{{ mysql_root_pwd }}'
+    name: '{{ wp_db_user }}'
+    password: '{{ wp_db_pwd }}'
+    priv: '{{ wp_db_name }}.*:ALL'
+    state: present
+    host: "{{ item }}"
+  with_items:
+    - localhost
+    - 127.0.0.1
+    - "{{ wp_app_ip }}"
+- name: Copia a configuração do MySQL
+  copy:
+    src: files/mysqld.cnf
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+  become: yes
+  notify: Reinicia mysql
