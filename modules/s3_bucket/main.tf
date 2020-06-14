@@ -1,7 +1,7 @@
 data "archive_file" "zip_files" {
   type          = "zip"
   source_dir    = var.upload_dir
-  output_path   = "/tmp/${var.zipfile_name}"
+  output_path   = var.zipfile_name
 }
 
 resource "aws_s3_bucket" "ansible_bucket" {
