@@ -15,7 +15,11 @@ module "sample-php-app" {
   app_config_dir        = "config"
   app_playbook_filename = "provision_sample.yml"
 
-  ssh_key_name          = "sample-key"
+  ssh_key_name          = "aula-terraform"
   allowed_ssh_ips       = ["192.168.1.1/32"]
 
+}
+
+output "public_dns" {
+  value = module.sample-php-app.app_public_dns
 }

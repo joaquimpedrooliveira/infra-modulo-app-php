@@ -1,2 +1,8 @@
----
-  key: value
+- hosts: localhost
+  connection: local
+  tasks:
+    - copy:
+        dest: /var/www/html/info.php
+        src: info.php
+        remote_src: yes
+      become: yes
