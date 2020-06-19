@@ -23,3 +23,14 @@
     - terraform init
     - terraform plan -out plano.out
 
+  - name: test
+    image: hashicorp/terraform:light
+    environment:
+      AWS_ACCESS_KEY_ID:
+        from_secret: AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY:
+        from_secret: AWS_SECRET_ACCESS_KEY
+    commands:
+    - apk add -U go
+    - cd test
+    - go test -v
