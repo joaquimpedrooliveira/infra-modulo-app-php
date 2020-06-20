@@ -32,9 +32,3 @@
     - localhost
     - 127.0.0.1
     - "{{ wp_app_ip }}"
-- name: Copia a configuração do MySQL
-  copy:
-    src: files/mysqld.cnf
-    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
-  become: yes
-  notify: Reinicia mysql
