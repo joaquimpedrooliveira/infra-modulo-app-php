@@ -20,7 +20,6 @@
         from_secret: AWS_SECRET_ACCESS_KEY
     commands:
     - cd examples/sample-app
-    - terraform init
     - terraform plan -out plano.out
 
   - name: test
